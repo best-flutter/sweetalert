@@ -1,3 +1,9 @@
+<p align="center">
+    <a href="https://pub.dartlang.org/packages/sweetalert">
+        <img src="https://img.shields.io/pub/v/sweetalert.svg" alt="pub package" />
+    </a>
+ </p>
+
 # sweetalert
 
 sweetalert for flutter.
