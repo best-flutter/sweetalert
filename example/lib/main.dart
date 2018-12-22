@@ -123,8 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       // return false to keep dialog
                       return false;
-                    } else {
-
                     }
                   });
                 },
