@@ -15,7 +15,10 @@ enum SweetAlertStyle { success, error, confirm, loading }
 
 class SweetAlertOptions {
   final String title;
+  final Widget titleText;
+
   final String subtitle;
+  final Widget subtitleText;
 
   final SweetAlertOnPress onPress;
 
@@ -43,7 +46,9 @@ class SweetAlertOptions {
   SweetAlertOptions(
       {this.showCancelButton: false,
         this.title,
+        this.titleText,
         this.subtitle,
+        this.subtitleText,
         this.onPress,
         this.cancelButtonColor,
         this.cancelButtonText,
@@ -156,25 +161,34 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
         break;
     }
 
-    if (_options.title != null) {
-      listOfChildren.add(new Padding(
-          padding: new EdgeInsets.only(top: 10.0),
-          child: new Text(
-            _options.title,
-            style: new TextStyle(fontSize: 25.0, color: new Color(0xff575757)),
-          )
-      ));
+    if (_options.titleText != null) {
+      listOfChildren.add(_options.titleText);
+    } else {
+      if (_options.title != null) {
+        listOfChildren.add(new Padding(
+            padding: new EdgeInsets.only(top: 10.0),
+            child: new Text(
+              _options.title,
+              style: new TextStyle(fontSize: 25.0, color: new Color(0xff575757)),
+            )
+        ));
+      }
     }
 
-    if (_options.subtitle != null) {
-      listOfChildren.add(new Padding(
-        padding: new EdgeInsets.only(top: 10.0),
-        child: new Text(
-          _options.subtitle,
-          style: new TextStyle(fontSize: 16.0, color: new Color(0xff797979)),
-        ),
-      ));
+    if (_options.subtitleText != null) {
+      listOfChildren.add(_options.subtitleText);
+    } else {
+      if (_options.subtitle != null) {
+        listOfChildren.add(new Padding(
+          padding: new EdgeInsets.only(top: 10.0),
+          child: new Text(
+            _options.subtitle,
+            style: new TextStyle(fontSize: 16.0, color: new Color(0xff797979)),
+          ),
+        ));
+      }
     }
+
 
     //we do not render buttons when style=loading
     if (_options.style != SweetAlertStyle.loading) {
@@ -267,7 +281,9 @@ abstract class SweetAlert {
   static void show(BuildContext context,
       {Curve curve,
         String title,
+        Widget titleText,
         String subtitle,
+        Widget subtitleText,
         bool showCancelButton: false,
         SweetAlertOnPress onPress,
         Color cancelButtonColor,
@@ -278,7 +294,9 @@ abstract class SweetAlert {
     SweetAlertOptions options =  new SweetAlertOptions(
         showCancelButton: showCancelButton,
         title: title,
+        titleText: titleText,
         subtitle: subtitle,
+        subtitleText: subtitleText,
         style: style,
         onPress: onPress,
         confirmButtonColor: confirmButtonColor,

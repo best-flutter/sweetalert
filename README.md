@@ -89,3 +89,27 @@ SweetAlert.show(context,
         return false;
       });
 ```
+
+#### With Widgets for Title and Subtitle
+
+![](images/5.png)
+
+
+```
+    SweetAlert.show(context,
+        titleText: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.0),
+          child: Text("Delete Profile", style: theme.textTheme.title.copyWith(fontWeight: FontWeight.bold),)
+        ),
+        subtitleText: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.0),
+          child: Text("Continuing will delete the profile", style: theme.textTheme.body1),
+        ),
+        confirmButtonColor: theme.errorColor,
+        //cancelButtonColor: theme.buttonTheme.colorScheme.primary,
+        style: SweetAlertStyle.confirm,
+        showCancelButton: true,
+        onPress: (bool isConfirm) {
+          return true;
+        });
+```
