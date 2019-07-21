@@ -42,14 +42,14 @@ class SweetAlertOptions {
 
   SweetAlertOptions(
       {this.showCancelButton: false,
-      this.title,
-      this.subtitle,
-      this.onPress,
-      this.cancelButtonColor,
-      this.cancelButtonText,
-      this.confirmButtonColor,
-      this.confirmButtonText,
-      this.style});
+        this.title,
+        this.subtitle,
+        this.onPress,
+        this.cancelButtonColor,
+        this.cancelButtonText,
+        this.confirmButtonColor,
+        this.confirmButtonText,
+        this.style});
 }
 
 class SweetAlertDialog extends StatefulWidget {
@@ -120,32 +120,35 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
   Widget build(BuildContext context) {
     List<Widget> listOfChildren = [];
 
+    const double width = 64.0;
+    const double height = 64.0;
+
     switch (_options.style) {
       case SweetAlertStyle.success:
         listOfChildren.add(new SizedBox(
-          width: 64.0,
-          height: 64.0,
+          width: width,
+          height: height,
           child: new SuccessView(),
         ));
         break;
       case SweetAlertStyle.confirm:
         listOfChildren.add(new SizedBox(
-          width: 64.0,
-          height: 64.0,
+          width: width,
+          height: height,
           child: new ConfirmView(),
         ));
         break;
       case SweetAlertStyle.error:
         listOfChildren.add(new SizedBox(
-          width: 64.0,
-          height: 64.0,
+          width: width,
+          height: height,
           child: new CancelView(),
         ));
         break;
       case SweetAlertStyle.loading:
         listOfChildren.add(new SizedBox(
-          width: 64.0,
-          height: 64.0,
+          width: width,
+          height: height,
           child: new Center(
             child: new CircularProgressIndicator(),
           ),
@@ -154,9 +157,12 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
     }
 
     if (_options.title != null) {
-      listOfChildren.add(new Text(
-        _options.title,
-        style: new TextStyle(fontSize: 25.0, color: new Color(0xff575757)),
+      listOfChildren.add(new Padding(
+          padding: new EdgeInsets.only(top: 10.0),
+          child: new Text(
+            _options.title,
+            style: new TextStyle(fontSize: 25.0, color: new Color(0xff575757)),
+          )
       ));
     }
 
@@ -260,15 +266,15 @@ abstract class SweetAlert {
 
   static void show(BuildContext context,
       {Curve curve,
-      String title,
-      String subtitle,
-      bool showCancelButton: false,
-      SweetAlertOnPress onPress,
-      Color cancelButtonColor,
-      Color confirmButtonColor,
-      String cancelButtonText,
-      String confirmButtonText,
-      SweetAlertStyle style}) {
+        String title,
+        String subtitle,
+        bool showCancelButton: false,
+        SweetAlertOnPress onPress,
+        Color cancelButtonColor,
+        Color confirmButtonColor,
+        String cancelButtonText,
+        String confirmButtonText,
+        SweetAlertStyle style}) {
     SweetAlertOptions options =  new SweetAlertOptions(
         showCancelButton: showCancelButton,
         title: title,
