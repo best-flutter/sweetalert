@@ -181,6 +181,33 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: SweetAlert.success,
                 textColor: Colors.white,
               ),
+              new Text("Custom buttons"),
+              new RaisedButton(
+                onPressed: () {
+                  SweetAlert.show(context,
+                      subtitle: "Do you want to delete this message",
+                      style: SweetAlertStyle.confirm,
+                      confirmButton: new RaisedButton(
+                        onPressed: () {
+                          SweetAlert.show(context,subtitle: "Success!", style: SweetAlertStyle.success);
+                        },
+                        color: Colors.purple,
+                        textColor: Colors.white,
+                        child: new Text("Confirm"),
+                      ),
+                      cancelButton: new RaisedButton(
+                        onPressed: () {
+                          SweetAlert.show(context, subtitle: "Cancelled!", style: SweetAlertStyle.error);
+                        },
+                        color: Theme.of(context).errorColor,
+                        child: new Text("Cancel"),
+                      ),
+                  );
+                },
+                child: new Text("Try me"),
+                color: SweetAlert.success,
+                textColor: Colors.white,
+              ),
             ],
           ),
         ));

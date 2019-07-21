@@ -34,8 +34,12 @@ class SweetAlertOptions {
   ///  and `SweetAlert.dangerText` when `showCancelButton` = true
   final String confirmButtonText;
 
+  final Widget confirmButton;
+
   /// if null,default value is `SweetAlert.cancelText`
   final String cancelButtonText;
+
+  final Widget cancelButton;
 
   /// If set to true, two buttons will be displayed.
   final bool showCancelButton;
@@ -52,8 +56,10 @@ class SweetAlertOptions {
         this.onPress,
         this.cancelButtonColor,
         this.cancelButtonText,
+        this.cancelButton,
         this.confirmButtonColor,
         this.confirmButtonText,
+        this.confirmButton,
         this.style});
 }
 
@@ -192,46 +198,75 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
 
     //we do not render buttons when style=loading
     if (_options.style != SweetAlertStyle.loading) {
-      if (_options.showCancelButton) {
-        listOfChildren.add(new Padding(
-          padding: new EdgeInsets.only(top: 10.0),
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new RaisedButton(
-                onPressed: cancel,
-                color: _options.cancelButtonColor ?? SweetAlert.cancel,
-                child: new Text(
-                  _options.cancelButtonText ?? SweetAlert.cancelText,
-                  style: new TextStyle(color: Colors.white, fontSize: 16.0),
+
+      if (_options.showCancelButton || _options.cancelButton != null) {
+        if (_options.cancelButton != null) {
+          listOfChildren.add(
+              new Padding(
+                  padding: new EdgeInsets.only(top: 10.0),
+                  child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _options.cancelButton,
+                        new SizedBox(
+                          width: 10.0,
+                        ),
+                        _options.confirmButton
+                      ]
+                  )
+              )
+          );
+        } else {
+          listOfChildren.add(new Padding(
+            padding: new EdgeInsets.only(top: 10.0),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new RaisedButton(
+                  onPressed: cancel,
+                  color: _options.cancelButtonColor ?? SweetAlert.cancel,
+                  child: new Text(
+                    _options.cancelButtonText ?? SweetAlert.cancelText,
+                    style: new TextStyle(color: Colors.white, fontSize: 16.0),
+                  ),
                 ),
-              ),
-              new SizedBox(
-                width: 10.0,
-              ),
-              new RaisedButton(
-                onPressed: confirm,
-                color: _options.confirmButtonColor ?? SweetAlert.danger,
-                child: new Text(
-                  _options.confirmButtonText ?? SweetAlert.confirmText,
-                  style: new TextStyle(color: Colors.white, fontSize: 16.0),
+                new SizedBox(
+                  width: 10.0,
                 ),
-              ),
-            ],
-          ),
-        ));
-      } else {
-        listOfChildren.add(new Padding(
-          padding: new EdgeInsets.only(top: 10.0),
-          child: new RaisedButton(
-            onPressed: confirm,
-            color: _options.confirmButtonColor ?? SweetAlert.success,
-            child: new Text(
-              _options.confirmButtonText ?? SweetAlert.successText,
-              style: new TextStyle(color: Colors.white, fontSize: 16.0),
+                new RaisedButton(
+                  onPressed: confirm,
+                  color: _options.confirmButtonColor ?? SweetAlert.danger,
+                  child: new Text(
+                    _options.confirmButtonText ?? SweetAlert.confirmText,
+                    style: new TextStyle(color: Colors.white, fontSize: 16.0),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ));
+          ));
+        }
+
+      } else {
+        if (_options.confirmButton != null) {
+          listOfChildren.add(
+              new Padding(
+                padding: new EdgeInsets.only(top: 10.0),
+                child: _options.confirmButton
+              )
+          );
+        } else {
+          listOfChildren.add(new Padding(
+            padding: new EdgeInsets.only(top: 10.0),
+            child: new RaisedButton(
+              onPressed: confirm,
+              color: _options.confirmButtonColor ?? SweetAlert.success,
+              child: new Text(
+                _options.confirmButtonText ?? SweetAlert.successText,
+                style: new TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+            ),
+          ));
+        }
       }
     }
 
@@ -288,8 +323,10 @@ abstract class SweetAlert {
         SweetAlertOnPress onPress,
         Color cancelButtonColor,
         Color confirmButtonColor,
+        Widget confirmButton,
         String cancelButtonText,
         String confirmButtonText,
+        Widget cancelButton,
         SweetAlertStyle style}) {
     SweetAlertOptions options =  new SweetAlertOptions(
         showCancelButton: showCancelButton,
@@ -301,8 +338,10 @@ abstract class SweetAlert {
         onPress: onPress,
         confirmButtonColor: confirmButtonColor,
         confirmButtonText: confirmButtonText,
+        confirmButton: confirmButton,
         cancelButtonText: cancelButtonText,
-        cancelButtonColor: cancelButtonColor);
+        cancelButtonColor: cancelButtonColor,
+        cancelButton: cancelButton);
     if(_state!=null){
       _state.update(options);
     }else{
