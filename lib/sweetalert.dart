@@ -120,35 +120,32 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
   Widget build(BuildContext context) {
     List<Widget> listOfChildren = [];
 
-    const double width = 64.0;
-    const double height = 64.0;
-
     switch (_options.style) {
       case SweetAlertStyle.success:
         listOfChildren.add(new SizedBox(
-          width: width,
-          height: height,
+          width: 64.0,
+          height: 64.0,
           child: new SuccessView(),
         ));
         break;
       case SweetAlertStyle.confirm:
         listOfChildren.add(new SizedBox(
-          width: width,
-          height: height,
+          width: 64.0,
+          height: 64.0,
           child: new ConfirmView(),
         ));
         break;
       case SweetAlertStyle.error:
         listOfChildren.add(new SizedBox(
-          width: width,
-          height: height,
+          width: 64.0,
+          height: 64.0,
           child: new CancelView(),
         ));
         break;
       case SweetAlertStyle.loading:
         listOfChildren.add(new SizedBox(
-          width: width,
-          height: height,
+          width: 64.0,
+          height: 64.0,
           child: new Center(
             child: new CircularProgressIndicator(),
           ),
@@ -157,12 +154,9 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
     }
 
     if (_options.title != null) {
-      listOfChildren.add(new Padding(
-          padding: new EdgeInsets.only(top: 10.0),
-          child: new Text(
-            _options.title,
-            style: new TextStyle(fontSize: 25.0, color: new Color(0xff575757)),
-          )
+      listOfChildren.add(new Text(
+        _options.title,
+        style: new TextStyle(fontSize: 25.0, color: new Color(0xff575757)),
       ));
     }
 
