@@ -37,6 +37,9 @@ class SweetAlertOptions {
   /// If set to true, two buttons will be displayed.
   final bool showCancelButton;
 
+  /// if null, default value is `Colors.blueAccent`
+  final Color loadingCircleColor;
+
 
   final SweetAlertStyle style;
 
@@ -49,6 +52,7 @@ class SweetAlertOptions {
       this.cancelButtonText,
       this.confirmButtonColor,
       this.confirmButtonText,
+      this.loadingCircleColor,
       this.style});
 }
 
@@ -147,7 +151,9 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
           width: 64.0,
           height: 64.0,
           child: new Center(
-            child: new CircularProgressIndicator(),
+            child: new CircularProgressIndicator(
+              backgroundColor: _options.loadingCircleColor ?? Colors.blueAccent,
+            ),
           ),
         ));
         break;
@@ -191,7 +197,7 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
               ),
               new RaisedButton(
                 onPressed: confirm,
-                color: _options.confirmButtonColor ?? SweetAlert.danger,
+                color: _options.cancelButtonColor?? SweetAlert.danger,
                 child: new Text(
                   _options.confirmButtonText ?? SweetAlert.confirmText,
                   style: new TextStyle(color: Colors.white, fontSize: 16.0),
@@ -268,6 +274,7 @@ abstract class SweetAlert {
       Color confirmButtonColor,
       String cancelButtonText,
       String confirmButtonText,
+      Color loadingCircleColor,
       SweetAlertStyle style}) {
     SweetAlertOptions options =  new SweetAlertOptions(
         showCancelButton: showCancelButton,
@@ -278,7 +285,8 @@ abstract class SweetAlert {
         confirmButtonColor: confirmButtonColor,
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
-        cancelButtonColor: confirmButtonColor);
+        cancelButtonColor: confirmButtonColor,
+        loadingCircleColor: loadingCircleColor);
     if(_state!=null){
       _state.update(options);
     }else{
