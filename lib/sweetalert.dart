@@ -162,7 +162,7 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
 
     if (_options.subtitle != null) {
       listOfChildren.add(new Padding(
-        padding: new EdgeInsets.only(top: 10.0),
+        padding: new EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
         child: new Text(
           _options.subtitle,
           style: new TextStyle(fontSize: 16.0, color: new Color(0xff797979)),
