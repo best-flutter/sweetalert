@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
 import 'dart:ui';
-import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 
 class ConfirmView extends StatefulWidget {
   @override
@@ -19,7 +17,7 @@ class ConfirmViewState extends State<ConfirmView>
 
   @override
   void initState() {
-    int factor = 50;
+    //int factor = 50;
     animationController = new AnimationController(vsync: this);
     animation =
         new ColorTween(begin: new Color(0xffF7D58B), end: new Color(0xffF2A665))

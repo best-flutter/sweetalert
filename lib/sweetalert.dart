@@ -1,12 +1,9 @@
 library sweetalert;
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:sweetalert/src/cancel.dart';
 import 'package:sweetalert/src/confirm.dart';
 import 'package:sweetalert/src/success.dart';
-
 
 /// Return false to keey dialog showing
 typedef bool SweetAlertOnPress(bool isConfirm);
@@ -14,8 +11,17 @@ typedef bool SweetAlertOnPress(bool isConfirm);
 enum SweetAlertStyle { success, error, confirm, loading }
 
 class SweetAlertOptions {
+  /// The title string
   final String title;
+
+  /// The subtitle string
   final String subtitle;
+
+  /// The padding of the title text
+  final EdgeInsets titlePadding;
+
+  /// The padding of the subtitle text
+  final EdgeInsets subtitlePadding;
 
   final SweetAlertOnPress onPress;
 
@@ -37,19 +43,29 @@ class SweetAlertOptions {
   /// If set to true, two buttons will be displayed.
   final bool showCancelButton;
 
-
   final SweetAlertStyle style;
 
-  SweetAlertOptions(
-      {this.showCancelButton: false,
-      this.title,
-      this.subtitle,
-      this.onPress,
-      this.cancelButtonColor,
-      this.cancelButtonText,
-      this.confirmButtonColor,
-      this.confirmButtonText,
-      this.style});
+  /// The alignment of the title text
+  final TextAlign titleAlign;
+
+  /// The alignment of the subtitle text
+  final TextAlign subtitleAlign;
+
+  SweetAlertOptions({
+    this.showCancelButton: false,
+    this.title,
+    this.subtitle,
+    this.onPress,
+    this.cancelButtonColor,
+    this.cancelButtonText,
+    this.confirmButtonColor,
+    this.confirmButtonText,
+    this.style,
+    this.titlePadding,
+    this.subtitlePadding,
+    this.titleAlign,
+    this.subtitleAlign,
+  });
 }
 
 class SweetAlertDialog extends StatefulWidget {
@@ -103,16 +119,12 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
   }
 
   void confirm() {
-    if (_options.onPress != null && _options.onPress(true) == false)
-      return;
+    if (_options.onPress != null && _options.onPress(true) == false) return;
     Navigator.pop(context);
   }
 
-
-
   void cancel() {
-    if (_options.onPress != null && _options.onPress(false) == false)
-      return;
+    if (_options.onPress != null && _options.onPress(false) == false) return;
     Navigator.pop(context);
   }
 
@@ -154,18 +166,27 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
     }
 
     if (_options.title != null) {
-      listOfChildren.add(new Text(
-        _options.title,
-        style: new TextStyle(fontSize: 25.0, color: new Color(0xff575757)),
+      listOfChildren.add(Padding(
+        padding: this._options.titlePadding ?? EdgeInsets.only(left: 10.0, top: 10.0),
+        child: new Text(
+          _options.title,
+          textAlign: this._options.titleAlign ?? TextAlign.left,
+          style: new TextStyle(
+            fontSize: 25.0,
+            color: new Color(0xff575757),
+          ),
+        ),
       ));
     }
 
     if (_options.subtitle != null) {
       listOfChildren.add(new Padding(
-        padding: new EdgeInsets.only(top: 10.0),
+        padding:
+            this._options.subtitlePadding ?? new EdgeInsets.only(top: 10.0),
         child: new Text(
           _options.subtitle,
           style: new TextStyle(fontSize: 16.0, color: new Color(0xff797979)),
+          textAlign: this._options.subtitleAlign ?? TextAlign.left,
         ),
       ));
     }
@@ -208,6 +229,7 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
             color: _options.confirmButtonColor ?? SweetAlert.success,
             child: new Text(
               _options.confirmButtonText ?? SweetAlert.successText,
+              textAlign: TextAlign.center,
               style: new TextStyle(color: Colors.white, fontSize: 16.0),
             ),
           ),
@@ -224,15 +246,16 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
                 child: new ClipRRect(
                   borderRadius: new BorderRadius.all(new Radius.circular(5.0)),
                   child: new Container(
-                      color: Colors.white,
-                      width: double.infinity,
-                      child: new Padding(
-                        padding: new EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-                        child: new Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: listOfChildren,
-                        ),
-                      )),
+                    color: Colors.white,
+                    width: double.infinity,
+                    child: new Padding(
+                      padding: new EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+                      child: new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: listOfChildren,
+                      ),
+                    ),
+                  ),
                 ),
               );
             }));
@@ -258,18 +281,24 @@ abstract class SweetAlert {
 
   static SweetAlertDialogState _state;
 
-  static void show(BuildContext context,
-      {Curve curve,
-      String title,
-      String subtitle,
-      bool showCancelButton: false,
-      SweetAlertOnPress onPress,
-      Color cancelButtonColor,
-      Color confirmButtonColor,
-      String cancelButtonText,
-      String confirmButtonText,
-      SweetAlertStyle style}) {
-    SweetAlertOptions options =  new SweetAlertOptions(
+  static void show(
+    BuildContext context, {
+    Curve curve,
+    String title,
+    String subtitle,
+    EdgeInsets titlePadding,
+    EdgeInsets subtitlePadding,
+    bool showCancelButton: false,
+    SweetAlertOnPress onPress,
+    Color cancelButtonColor,
+    Color confirmButtonColor,
+    String cancelButtonText,
+    String confirmButtonText,
+    TextAlign titleAlign,
+    TextAlign subtitleAlign,
+    SweetAlertStyle style,
+  }) {
+    SweetAlertOptions options = new SweetAlertOptions(
         showCancelButton: showCancelButton,
         title: title,
         subtitle: subtitle,
@@ -278,28 +307,29 @@ abstract class SweetAlert {
         confirmButtonColor: confirmButtonColor,
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
-        cancelButtonColor: confirmButtonColor);
-    if(_state!=null){
+        cancelButtonColor: confirmButtonColor,
+        titlePadding: titlePadding,
+        subtitlePadding: subtitlePadding,
+        titleAlign: titleAlign,
+        subtitleAlign: subtitleAlign);
+    if (_state != null) {
       _state.update(options);
-    }else{
+    } else {
       showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return new Container(
-              color: Colors.transparent,
-              child: new Padding(
-                padding: new EdgeInsets.all(40.0),
-                child: new Scaffold(
-                  backgroundColor: Colors.transparent,
-                  body: new SweetAlertDialog(
-                      curve: curve,
-                      options:options
-                  ),
-                ),
+        context: context,
+        builder: (BuildContext context) {
+          return new Container(
+            color: Colors.transparent,
+            child: new Padding(
+              padding: new EdgeInsets.all(40.0),
+              child: new Scaffold(
+                backgroundColor: Colors.transparent,
+                body: new SweetAlertDialog(curve: curve, options: options),
               ),
-            );
-          });
+            ),
+          );
+        },
+      );
     }
-
   }
 }
