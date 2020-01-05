@@ -307,7 +307,7 @@ abstract class SweetAlert {
         confirmButtonColor: confirmButtonColor,
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
-        cancelButtonColor: confirmButtonColor,
+        cancelButtonColor: cancelButtonColor,
         titlePadding: titlePadding,
         subtitlePadding: subtitlePadding,
         titleAlign: titleAlign,
