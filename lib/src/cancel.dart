@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sweetalert/sweetalert.dart';
-import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
 import 'dart:ui';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
@@ -20,7 +19,7 @@ class CancelViewState extends State<CancelView>
 
   @override
   void initState() {
-    int factor = 50;
+    //int factor = 50;
     animationController = new AnimationController(vsync: this);
 
     sequenceAnimation = new SequenceAnimationBuilder()

@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'package:sweetalert/sweetalert.dart';
 import 'package:flutter/material.dart';
 
-import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
 
 void main() => runApp(MyApp());
@@ -80,7 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
               new Text("Basic usage"),
               new RaisedButton(
                 onPressed: () {
-                  SweetAlert.show(context, title: "Just show a message");
+                  SweetAlert.show(context,
+                      title: "Just show a message",
+                      titlePadding: EdgeInsets.all(20.0),
+                      titleAlign: TextAlign.center);
                 },
                 child: new Text("Try me"),
                 color: SweetAlert.success,
@@ -89,9 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
               new Text("Title with subtitle"),
               new RaisedButton(
                 onPressed: () {
-                  SweetAlert.show(context,
-                      title: "Just show a message",
-                      subtitle: "Sweet alert is pretty");
+                  SweetAlert.show(
+                    context,
+                    title: "Just show a message",
+                    titleAlign: TextAlign.center,
+                    subtitle: "Sweet alert is pretty",
+                    subtitlePadding: EdgeInsets.all(8.0),
+                  );
                 },
                 child: new Text("Try me"),
                 color: SweetAlert.success,
@@ -100,10 +105,12 @@ class _MyHomePageState extends State<MyHomePage> {
               new Text("A success message"),
               new RaisedButton(
                 onPressed: () {
-                  SweetAlert.show(context,
-                      title: "Just show a message",
-                      subtitle: "Sweet alert is pretty",
-                      style: SweetAlertStyle.success);
+                  SweetAlert.show(
+                    context,
+                    title: "Just show a message",
+                    subtitle: "Sweet alert is pretty",
+                    style: SweetAlertStyle.success,
+                  );
                 },
                 child: new Text("Try me"),
                 color: SweetAlert.success,
@@ -113,18 +120,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   "A warning message,with a function action on \"Confirm\"-button"),
               new RaisedButton(
                 onPressed: () {
-                  SweetAlert.show(context,
-                      title: "Just show a message",
-                      subtitle: "Sweet alert is pretty",
-                      style: SweetAlertStyle.confirm,
-                      showCancelButton: true, onPress: (bool isConfirm) {
-                    if (isConfirm) {
-                      SweetAlert.show(context,style: SweetAlertStyle.success,title: "Success");
+                  SweetAlert.show(
+                    context,
+                    title: "Just show a message",
+                    subtitle: "Sweet alert is pretty",
+                    style: SweetAlertStyle.confirm,
+                    showCancelButton: true,
+                    onPress: (bool isConfirm) {
+                      if (isConfirm) {
+                        SweetAlert.show(context,
+                            style: SweetAlertStyle.success, title: "Success");
 
-                      // return false to keep dialog
-                      return false;
-                    }
-                  });
+                        // return false to keep dialog
+                        return false;
+                      } else
+                        return true;
+                    },
+                  );
                 },
                 child: new Text("Try me"),
                 color: SweetAlert.success,
@@ -137,13 +149,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       subtitle: "Do you want to delete this message",
                       style: SweetAlertStyle.confirm,
                       showCancelButton: true, onPress: (bool isConfirm) {
-                    if(isConfirm){
-                      SweetAlert.show(context,subtitle: "Deleting...", style: SweetAlertStyle.loading);
-                      new Future.delayed(new Duration(seconds: 2),(){
-                        SweetAlert.show(context,subtitle: "Success!", style: SweetAlertStyle.success);
+                    if (isConfirm) {
+                      SweetAlert.show(context,
+                          subtitle: "Deleting...",
+                          style: SweetAlertStyle.loading);
+                      new Future.delayed(new Duration(seconds: 2), () {
+                        SweetAlert.show(context,
+                            subtitle: "Success!",
+                            style: SweetAlertStyle.success);
                       });
-                    }else{
-                      SweetAlert.show(context,subtitle: "Canceled!", style: SweetAlertStyle.error);
+                    } else {
+                      SweetAlert.show(
+                        context,
+                        subtitle: "Canceled!",
+                        style: SweetAlertStyle.error,
+                      );
                     }
                     // return false to keep dialog
                     return false;
@@ -153,8 +173,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: SweetAlert.success,
                 textColor: Colors.white,
               ),
-
-
               new Text("Do a job that may fail"),
               new RaisedButton(
                 onPressed: () {
@@ -162,20 +180,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       subtitle: "Do you want to delete this message",
                       style: SweetAlertStyle.confirm,
                       showCancelButton: true, onPress: (bool isConfirm) {
-                        if (isConfirm) {
-                        //Return false to keep dialog
-                          if(isConfirm){
-                            SweetAlert.show(context,subtitle: "Deleting...", style: SweetAlertStyle.loading);
-                            new Future.delayed(new Duration(seconds: 2),(){
-                              SweetAlert.show(context,subtitle: "Job fail!", style: SweetAlertStyle.error);
-                            });
-                          }else{
-                            SweetAlert.show(context,subtitle: "Canceled!", style: SweetAlertStyle.error);
-                          }
-                          return false;
-                        }
-
-                      });
+                    if (isConfirm) {
+                      //Return false to keep dialog
+                      if (isConfirm) {
+                        SweetAlert.show(context,
+                            subtitle: "Deleting...",
+                            style: SweetAlertStyle.loading);
+                        new Future.delayed(new Duration(seconds: 2), () {
+                          SweetAlert.show(
+                            context,
+                            subtitle: "Job fail!",
+                            style: SweetAlertStyle.error,
+                          );
+                        });
+                      } else {
+                        SweetAlert.show(
+                          context,
+                          subtitle: "Canceled!",
+                          style: SweetAlertStyle.error,
+                        );
+                      }
+                      return false;
+                    } else
+                      return true;
+                  });
                 },
                 child: new Text("Try me"),
                 color: SweetAlert.success,
