@@ -278,7 +278,7 @@ abstract class SweetAlert {
         confirmButtonColor: confirmButtonColor,
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
-        cancelButtonColor: confirmButtonColor);
+        cancelButtonColor: cancelButtonColor);
     if(_state!=null){
       _state.update(options);
     }else{
