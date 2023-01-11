@@ -7,7 +7,6 @@ import 'package:sweetalert/src/cancel.dart';
 import 'package:sweetalert/src/confirm.dart';
 import 'package:sweetalert/src/success.dart';
 
-
 /// Return false to keey dialog showing
 typedef bool SweetAlertOnPress(bool isConfirm);
 
@@ -36,7 +35,6 @@ class SweetAlertOptions {
 
   /// If set to true, two buttons will be displayed.
   final bool showCancelButton;
-
 
   final SweetAlertStyle style;
 
@@ -103,16 +101,12 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
   }
 
   void confirm() {
-    if (_options.onPress != null && _options.onPress(true) == false)
-      return;
+    if (_options.onPress != null && _options.onPress(true) == false) return;
     Navigator.pop(context);
   }
 
-
-
   void cancel() {
-    if (_options.onPress != null && _options.onPress(false) == false)
-      return;
+    if (_options.onPress != null && _options.onPress(false) == false) return;
     Navigator.pop(context);
   }
 
@@ -178,7 +172,7 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new RaisedButton(
+              new ElevatedButton(
                 onPressed: cancel,
                 color: _options.cancelButtonColor ?? SweetAlert.cancel,
                 child: new Text(
@@ -189,7 +183,7 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
               new SizedBox(
                 width: 10.0,
               ),
-              new RaisedButton(
+              new ElevatedButton(
                 onPressed: confirm,
                 color: _options.confirmButtonColor ?? SweetAlert.danger,
                 child: new Text(
@@ -203,7 +197,7 @@ class SweetAlertDialogState extends State<SweetAlertDialog>
       } else {
         listOfChildren.add(new Padding(
           padding: new EdgeInsets.only(top: 10.0),
-          child: new RaisedButton(
+          child: new ElevatedButton(
             onPressed: confirm,
             color: _options.confirmButtonColor ?? SweetAlert.success,
             child: new Text(
@@ -269,7 +263,7 @@ abstract class SweetAlert {
       String cancelButtonText,
       String confirmButtonText,
       SweetAlertStyle style}) {
-    SweetAlertOptions options =  new SweetAlertOptions(
+    SweetAlertOptions options = new SweetAlertOptions(
         showCancelButton: showCancelButton,
         title: title,
         subtitle: subtitle,
@@ -279,9 +273,9 @@ abstract class SweetAlert {
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
         cancelButtonColor: confirmButtonColor);
-    if(_state!=null){
+    if (_state != null) {
       _state.update(options);
-    }else{
+    } else {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -291,15 +285,11 @@ abstract class SweetAlert {
                 padding: new EdgeInsets.all(40.0),
                 child: new Scaffold(
                   backgroundColor: Colors.transparent,
-                  body: new SweetAlertDialog(
-                      curve: curve,
-                      options:options
-                  ),
+                  body: new SweetAlertDialog(curve: curve, options: options),
                 ),
               ),
             );
           });
     }
-
   }
 }
